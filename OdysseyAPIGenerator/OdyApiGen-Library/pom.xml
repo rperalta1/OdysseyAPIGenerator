@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+	<groupId>gov.nmcourts.odyssey</groupId>
+  	<artifactId>OdyApiGen-ParentProject</artifactId>
+  	<version>2</version>
+  </parent>
+
+  <groupId>gov.nmcourts.odyssey.apis</groupId>
+  <artifactId>OdyApiGen-Library</artifactId>
+  <!--  Configuring library version -->  
+  <version>2017</version>
+  <packaging>jar</packaging>
+  
+  <name>OdyApiGen-Library</name>
+  
+  <dependencies>
+    <dependency>
+   	    <groupId>org.apache.cxf</groupId>
+    	<artifactId>cxf-bundle</artifactId>
+    	<version>2.7.18</version>
+	 </dependency> 
+  </dependencies>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+   <build>
+    	
+    <resources>
+	    <resource>
+	     	<directory>src/main/java</directory>
+	    	<includes>
+	       		<include>**/*.java</include>
+	    	</includes>
+		</resource>
+		<resource>
+	     	<directory>src/generated/tyler</directory>
+	    	<includes>
+	       		<include>**/*.java</include>
+	    	</includes>
+		</resource>
+	</resources>
+
+    <plugins>
+    
+    	<plugin>
+      		<artifactId>maven-clean-plugin</artifactId>      		
+      		<configuration>
+        		<skip>true</skip>
+      		</configuration>
+    	</plugin>
+    	
+  	      <plugin>
+        	<groupId>org.codehaus.mojo</groupId>
+	        <artifactId>build-helper-maven-plugin</artifactId>
+	        <version>3.0.0</version>
+        	<executions>
+	        	<execution>
+    	        	<id>add-source</id>
+	        	    <phase>initialize</phase>
+    	        	<goals>
+        	      		<goal>add-source</goal>
+	        	    </goals>
+    	        	<configuration>
+        	    		<sources>
+            				<source>src/generated/tyler</source>
+						</sources>
+    	        	</configuration>
+        	  	</execution>
+        	</executions>
+		 </plugin>
+    
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+	        <configuration>
+	        	<source>1.8</source>
+	            <target>1.8</target>                
+	        </configuration>            
+         </plugin>
+        
+    </plugins>
+    
+  </build>
+
+</project>

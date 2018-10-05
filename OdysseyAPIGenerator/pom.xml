@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>gov.nmcourts.odyssey</groupId>
+  <artifactId>OdyApiGen-ParentProject</artifactId>
+  <version>2</version>
+  
+  <packaging>pom</packaging>
+
+  <name>OdyApiGen-ParentProject</name>
+
+  <properties>
+
+	<!--  Parameter to be configured -->  
+  	<dir.init>C:/tmp/Ody2017</dir.init>
+    <odyssey.api.wsdl>http://dev-config-all.nmcourts.gov/WebServices/APIWebService.asmx?WSDL</odyssey.api.wsdl>
+    <odyssey.ixml.wsdl>http://dev-config-all.nmcourts.gov/Infrastructure/Integration/IntegrationEntityLoad.asmx?WSDL</odyssey.ixml.wsdl>
+    
+    <!--  Fixed parameters -->
+	<dir.input>target/preprocessing</dir.input>
+	<dir.api>../OdyApiGen-Library/src/generated/tyler/generated/com/tylertech/api</dir.api>
+	<dir.ixml>../OdyApiGen-Library/src/generated/tyler/generated/com/tylertech/ixml</dir.ixml>
+	<dir.xsdbindings>../OdyApiGen-Library/src/generated/tyler/generated/com/tylertech/xsdbindings</dir.xsdbindings>  
+	<dir.output>../OdyApiGen-Library/src/generated/tyler</dir.output>
+	 
+	<pojo.package>generated.com.tylertech.xsdbindings</pojo.package>
+		
+	<odyssey.api.package>generated.com.tylertech.api</odyssey.api.package>
+	<odyssey.api.dest>../OdyApiGen-Library/src/generated/tyler</odyssey.api.dest>		
+	<odyssey.ixml.package>generated.com.tylertech.ixml</odyssey.ixml.package>
+	<odyssey.ixml.dest>../OdyApiGen-Library/src/generated/tyler</odyssey.ixml.dest>
+	
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+	
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+	    <groupId>com.sun.xml.bind</groupId>
+	    <artifactId>jaxb-core</artifactId>
+	    <version>2.3.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.sun.xml.bind</groupId>
+	    <artifactId>jaxb-impl</artifactId>
+	    <version>2.3.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.sun.xml.bind</groupId>
+	    <artifactId>jaxb-xjc</artifactId>
+	    <version>2.3.0</version>
+	</dependency>
+	<dependency>
+    	<groupId>log4j</groupId>
+    	<artifactId>log4j</artifactId>
+    	<version>1.2.16</version>
+	</dependency>
+  	<dependency>
+    	<groupId>com.google.guava</groupId>
+	    <artifactId>guava</artifactId>
+	    <version>10.0</version>
+	</dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    
+      <plugins>
+      <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+      	<plugin>
+	      	<groupId>org.eclipse.m2e</groupId>
+	      	<artifactId>lifecycle-mapping</artifactId>
+	      	<version>1.0.0</version>
+	      	<configuration>
+	      		<lifecycleMappingMetadata>
+	      			<pluginExecutions>	
+	      				<pluginExecution>	
+	      					<pluginExecutionFilter>
+	                    		<groupId>org.apache.maven.plugins</groupId>
+	                    		<artifactId>maven-antrun-plugin</artifactId>
+	                    		<versionRange>[1.6,)</versionRange>
+	                    		<goals>
+	                      			<goal>run</goal>
+	                    		</goals>
+	                  		</pluginExecutionFilter>      					
+	      					<action>
+	      						<ignore></ignore>
+	      					</action>
+	      				</pluginExecution>
+	      				
+	      			</pluginExecutions>
+	      		</lifecycleMappingMetadata>
+	      	</configuration>
+        </plugin>
+     
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.7.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.20.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <plugin>
+            <artifactId>build-helper-maven-plugin</artifactId>
+    	    <version>3.0.0</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    
+     <plugins>
+       	
+     	<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-antrun-plugin</artifactId>
+  			<version>1.7</version>
+  			<executions>
+      			<execution>
+				<id>cleaning-files</id>
+          			<phase>clean</phase>
+          			<configuration>
+              			<target>              				
+              				<delete dir  ="OdyApiGen-Builder/target" failonerror="false"/>
+              				<delete dir  ="OdyApiGen-Builder/builder" failonerror="false"/>              				
+              				<delete dir  ="OdyApiGen-Library/src/generated" failonerror="false"/>              				
+                  			<delete dir  ="OdyApiGen-Library/target" failonerror="false"/>
+                  			<delete dir  ="OdyApiGen-Library/builder" failonerror="false"/>           			
+              			    <delete dir  ="target" failonerror="false"/>
+              				<delete dir  ="test" failonerror="false"/>  
+              				<delete dir  ="OdyApiGen-Example/target" failonerror="false"/> 
+              				<delete file ="OdyApiGen-Example/downtest.pdf"/>            				
+              			</target>
+          			</configuration>
+          			<goals>
+              			<goal>run</goal>
+          			</goals>
+      			</execution>
+      
+  			</executions>
+     	</plugin>
+     		
+     </plugins>
+    
+  </build>
+   
+  <modules>
+  	<module>OdyApiGen-Builder</module>
+    <module>OdyApiGen-Library</module>
+  </modules>
+
+</project>

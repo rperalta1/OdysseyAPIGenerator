@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+	<groupId>gov.nmcourts.odyssey</groupId>
+  	<artifactId>OdyApiGen-ParentProject</artifactId>
+  	<version>2</version>
+  </parent>
+
+  <groupId>gov.nmcourts.odyssey.apis</groupId>
+  <artifactId>OdyApiGen-Builder</artifactId>
+  
+  <name>OdyApiGen-Builder</name>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+ 
+  <build>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+      <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+      	<plugin>
+      	<groupId>org.eclipse.m2e</groupId>
+      	<artifactId>lifecycle-mapping</artifactId>
+      	<version>1.0.0</version>
+      	<configuration>
+      		<lifecycleMappingMetadata>
+      			<pluginExecutions>
+      				 
+      				<pluginExecution>
+      					<pluginExecutionFilter>
+      						<groupId>
+      							org.apache.maven.plugins
+      						</groupId>
+      						<artifactId>
+      							maven-assembly-plugin
+      						</artifactId>
+      						<versionRange>[2.2-beta-5,)</versionRange>
+      						<goals>
+      							<goal>single</goal>
+      						</goals>
+      					</pluginExecutionFilter>
+      					<action>
+      						<ignore></ignore>
+      					</action>
+      				</pluginExecution>      				
+      				  	
+      				<pluginExecution>	
+      					<pluginExecutionFilter>
+                    		<groupId>org.apache.maven.plugins</groupId>
+                    		<artifactId>maven-antrun-plugin</artifactId>
+                    		<versionRange>[1.6,)</versionRange>
+                    		<goals>
+                      			<goal>run</goal>
+                    		</goals>
+                  		</pluginExecutionFilter>      					
+      					<action>
+      						<ignore></ignore>
+      					</action>
+      				</pluginExecution>
+      				
+      			</pluginExecutions>
+      		</lifecycleMappingMetadata>
+      		
+      	</configuration>
+      	</plugin>
+   	</plugins>
+    	
+    </pluginManagement>
+    
+   <plugins>
+   
+   		<plugin>
+      		<artifactId>maven-clean-plugin</artifactId>
+      		<configuration>
+        		<skip>true</skip>
+      		</configuration>
+    	</plugin>
+   
+  		
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-antrun-plugin</artifactId>
+  			<version>1.7</version>
+  			<executions>
+  			  <execution>
+				<id>copy-files</id>
+          			<phase>compile</phase>
+          			<configuration>
+              			<target>
+                  			<mkdir  dir  ="target/preprocessing"/>
+                  			<copy   file ="src/main/resources/initial.xjb" tofile="target/preprocessing/initial.xjb"/>
+                  			<copy   file ="src/main/resources/errorstream.xsd" tofile="target/preprocessing/errorstream.xsd"/>                  			
+              			</target>
+          			</configuration>
+          			<goals>
+              			<goal>run</goal>
+          			</goals>
+      			</execution>
+  			</executions>
+     	</plugin>
+  		
+  		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>jaxws-maven-plugin</artifactId>
+			<version>2.5</version>
+			<executions>
+				<execution>
+				 	<id>wsdls-api</id>
+					<goals>
+						<goal>wsimport</goal>
+					</goals>
+					<phase>generate-sources</phase>
+					<configuration>
+						<keep>true</keep>
+						<extension>true</extension>
+						<packageName>${odyssey.api.package}</packageName>
+						<sourceDestDir>${odyssey.api.dest}</sourceDestDir>
+						<wsdlUrls>
+							<wsdlUrl>
+								${odyssey.api.wsdl}
+							</wsdlUrl>
+						</wsdlUrls>
+					</configuration>
+				</execution>
+				<execution>
+					<id>wsdls-ixml</id>
+					<goals>
+						<goal>wsimport</goal>
+					</goals>
+					<phase>generate-sources</phase>
+					<configuration>
+						<keep>true</keep>
+						<extension>true</extension>
+						<packageName>${odyssey.ixml.package}</packageName>
+						<sourceDestDir>${odyssey.ixml.dest}</sourceDestDir>
+						<wsdlUrls>
+							<wsdlUrl>
+								${odyssey.ixml.wsdl}
+							</wsdlUrl>
+						</wsdlUrls>
+					</configuration>
+				</execution>
+			</executions>			
+		</plugin>
+		
+		<plugin>
+	   		<groupId>org.apache.maven.plugins</groupId>
+	   		<artifactId>maven-assembly-plugin</artifactId>
+	   		<executions>
+	       		<execution>
+	       			<id>make-assembly</id>
+	           		<phase>compile</phase>
+	           		<goals>
+	               		<goal>single</goal>
+	           		</goals>
+	           		<configuration>
+	           			<verbose>false</verbose>	    
+	           			<finalName>builder</finalName>         			          			
+	               		<archive>
+	               			<manifest>
+	                   			<mainClass>
+	                       			gov.nmcourts.api.builder.main.Builder
+	                    		</mainClass>
+	                		</manifest>
+	                	</archive>
+	                	<descriptorRefs>
+		                	<descriptorRef>jar-with-dependencies</descriptorRef>
+	    	            </descriptorRefs>	                	
+	            	</configuration>
+	       		</execution>
+	   		</executions>
+		</plugin>		
+		 
+		<plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.1.1</version>
+            <executions>
+                <execution>
+                    <phase>install</phase>
+                    <goals>
+                        <goal>exec</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <executable>java</executable>
+                <arguments>
+                    <argument>-jar</argument>
+                    <argument>./target/builder-jar-with-dependencies.jar</argument>
+                    <argument>${dir.init}</argument>
+                    <argument>${dir.input}</argument>
+                    <argument>${pojo.package}</argument>
+                    <argument>${dir.output}</argument>
+                </arguments>
+            </configuration>
+        </plugin>
+		
+    </plugins>
+    
+  </build>
+  
+</project>
