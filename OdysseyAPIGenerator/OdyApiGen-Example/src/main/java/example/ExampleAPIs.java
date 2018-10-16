@@ -148,8 +148,9 @@ public class ExampleAPIs {
 			System.out.println("-------------------------------------------------------------------------");
 			System.out.println("Testing AddCaseCrossReferenceNumber API -- adding one CCR to case number:");
 			System.out.println("-------------------------------------------------------------------------");
+			String newCCR = "CCR" + LocalDate.now().toString() + LocalTime.now().toString().replaceAll("[-:.]","");
 			exampleAPIs.addCaseCrossReferenceNumber(odysseyWebServiceInvoker, results.getCaseID(), 
-					"CCR" + LocalDate.now().toString() + LocalTime.now().toString(), "SE", results.getNodeID(),
+					newCCR, "SE", results.getNodeID(),
 					userId, referenceNumber, source);
 						
 		} catch (OdysseyWebServiceException e) {

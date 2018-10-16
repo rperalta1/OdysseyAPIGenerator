@@ -24,10 +24,10 @@ package example;
 public class ExampleParameters {
 
     
-	private static String odysseyApiWdls  	= "http://dev-config-all.nmcourts.gov/WebServices/APIWebService.asmx?WSDL";
-	private static String odysseySiteId   	= "DEVCONFIG";
-	private static String odysseyUserId	= "4847";
-	private static String odysseyCaseNumber= "D307NH9700003";
+	private String odysseyApiWdls  	= "http://dev-config-all.nmcourts.gov/WebServices/APIWebService.asmx?WSDL";
+	private String odysseySiteId   	= "DEVCONFIG";
+	private String odysseyUserId	= "4847";
+	private String odysseyCaseNumber= "D307NH9700003";
 			
 	private final static String ODYSSEY_AGENCY    = "MIB";
 	private final static String ODYSSEY_ENV       = "DEVELOPMENT";
