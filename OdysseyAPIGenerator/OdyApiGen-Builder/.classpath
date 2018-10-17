@@ -27,7 +27,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output="target/classes" path="Users/rperalta/git/OdysseyAPIGenerator/OdyApiGen-ParentProject/OdyApiGen-Library/src/generated/tyler">
+	<classpathentry kind="src" output="target/classes" path="Users/rperalta/git/OdysseyAPIGenerator/OdysseyAPIGenerator/OdyApiGen-Library/src/generated/tyler">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>

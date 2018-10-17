@@ -59,8 +59,7 @@ public class OdysseyWebServiceInvoker {
 		
 		String requestXML = null;
 		try {
-			requestXML = XmlMarshallingUtil.marshallRequest(message);
-			System.out.println(requestXML);
+			requestXML = XmlMarshallingUtil.marshallRequest(message);			
 			logger.info("XML for request is: \n" + requestXML);
 		} catch (JAXBException e) {
 			throw new OdysseyWebServiceException(ERROR_COULD_NOT_MARSHAL_XML, e);
