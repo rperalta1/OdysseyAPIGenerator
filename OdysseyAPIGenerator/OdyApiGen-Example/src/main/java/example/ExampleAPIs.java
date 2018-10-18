@@ -54,8 +54,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 //-----------------------------------------------------------------------------------------------------------------------------------
 //  For Eclipse users
 //  ---------------------------------------------------------------------------------------------------------------------------------
@@ -68,7 +67,7 @@ import org.apache.logging.log4j.Logger;
 public class ExampleAPIs {
 	
 	@SuppressWarnings("unused")
-	private Logger logger = LogManager.getLogger(ExampleAPIs.class);
+	private Logger logger = Logger.getLogger(ExampleAPIs.class);
 	
 	public static void main(String[] args){		
 		ExampleAPIs exampleAPIs = new ExampleAPIs();
