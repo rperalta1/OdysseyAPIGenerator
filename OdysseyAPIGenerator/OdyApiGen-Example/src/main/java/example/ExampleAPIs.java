@@ -50,7 +50,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -157,7 +156,10 @@ public class ExampleAPIs {
 			System.out.println("-------------------------------------------------------------------------");
 			System.out.println("Testing AddCaseCrossReferenceNumber API -- adding one CCR to case number:");
 			System.out.println("-------------------------------------------------------------------------");
-			String newCCR = "CCR" + LocalDate.now().toString() + LocalTime.now().toString().replaceAll("[-:.]","");
+			
+			//Java 10 dateTime precision is up to nanoseconds
+			String newCCR = "CCR" + LocalDateTime.now().format(DateTimeFormatter.ofPattern(" MM-dd-yyyy, hh:mm")); 
+			
 			exampleAPIs.addCaseCrossReferenceNumber(odysseyWebServiceInvoker, results.getCaseID(), 
 					newCCR, "SE", results.getNodeID(),
 					userId, referenceNumber, source);

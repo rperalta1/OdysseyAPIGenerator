@@ -7,16 +7,21 @@
   	<version>2</version>
   </parent>
 
-  <groupId>gov.nmcourts.odyssey.apis</groupId>
+  <groupId>gov.nmcourts.odyssey.apis</groupId> 
   <artifactId>OdyApiGen-Builder</artifactId>
   
   <name>OdyApiGen-Builder</name>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- 
+    JAVA 10. Include the absolute path where wsimport is located, and make sure Eclipse is using JDK 10.
+    For a Linux environment use "wsimport" instead of "wsimport.exe"
+    -->
+    <tool.wsimport>C:/Program Files/Java/jdk-10.0.2/bin/wsimport.exe</tool.wsimport>
   </properties>
  
-  <build>
+   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
       <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
@@ -105,6 +110,7 @@
 			<groupId>org.codehaus.mojo</groupId>
 			<artifactId>jaxws-maven-plugin</artifactId>
 			<version>2.5</version>
+			
 			<executions>
 				<execution>
 				 	<id>wsdls-api</id>
@@ -121,7 +127,9 @@
 							<wsdlUrl>
 								${odyssey.api.wsdl}
 							</wsdlUrl>
-						</wsdlUrls>
+						</wsdlUrls>						
+						<!-- JAVA 10 -->
+						<executable>${tool.wsimport}</executable>          				          				
 					</configuration>
 				</execution>
 				<execution>
@@ -139,7 +147,9 @@
 							<wsdlUrl>
 								${odyssey.ixml.wsdl}
 							</wsdlUrl>
-						</wsdlUrls>
+						</wsdlUrls>						
+						<!-- JAVA 10 -->
+						<executable>${tool.wsimport}</executable>
 					</configuration>
 				</execution>
 			</executions>			
@@ -197,7 +207,16 @@
                 </arguments>
             </configuration>
         </plugin>
-		
+ 
+		<plugin>
+	    	<groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	        <version>3.8.0</version>
+	        <configuration>
+        		<release>10</release>
+    		</configuration>
+		</plugin>
+				
     </plugins>
     
   </build>

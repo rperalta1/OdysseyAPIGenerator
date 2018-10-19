@@ -3,7 +3,7 @@ Building the Shared Library from Command Line Interface
 
 Pre-requisites
 --------------
-Java (we have tested with jdk1.8; other jdk versions may work but are untested) and Apache Maven 3.5.2 
+Java 10 (we have tested with jdk-10.0.2; other jdk versions may work but are untested) and Apache Maven 3.5.2 
 (the version we have tested; other versions may work but are untested) must be installed before you execute the next procedure.
 
 Install procedure

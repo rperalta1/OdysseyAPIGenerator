@@ -21,6 +21,7 @@
 ***************************************/
 package gov.nmcourts.webservices.odyssey;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -73,11 +74,19 @@ public class OdysseyWebServiceInvoker {
 		Object reply = null;
 				
 		T expected = null;
-		try {
-			expected = expectedReplyClass.newInstance();
+		try {			
+			expected = expectedReplyClass.getConstructor().newInstance(); //JAVA 10 
 		} catch (InstantiationException e) {
 			throw new OdysseyWebServiceException(ERROR_COULD_NOT_INSTANTIATE_CLASS, e);
-		} catch (IllegalAccessException e) {
+		} catch (IllegalAccessException e) {  
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {  //JAVA 10
+			e.printStackTrace();
+		} catch (InvocationTargetException e) { //JAVA 10
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {     //JAVA 10
+			e.printStackTrace();
+		} catch (SecurityException e) {         //JAVA 10 
 			e.printStackTrace();
 		}
 		
