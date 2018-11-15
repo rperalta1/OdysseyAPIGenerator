@@ -614,7 +614,8 @@ public class Builder extends DiGraph{
 	public void handleCollisions(String filename){
 		
 		//System.out.println("Processing XSD file :" + filename); //for debugging
-		List<XsdFileNode> xsdFileNodes = new ArrayList<XsdFileNode>();		
+		List<XsdFileNode> xsdFileNodes = new ArrayList<XsdFileNode>();
+		xsdFileNodes.add(new XsdFileNode(-1, -1, "DOC ROOT NODE", "")); // Adding root node for searchings
 		Document doc = null;
 		try {
 			doc = loadXsdFile(new File(filename), xsdFileNodes);
