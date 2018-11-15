@@ -615,7 +615,7 @@ public class Builder extends DiGraph{
 		
 		//System.out.println("Processing XSD file :" + filename); //for debugging
 		List<XsdFileNode> xsdFileNodes = new ArrayList<XsdFileNode>();
-		xsdFileNodes.add(new XsdFileNode(-1, -1, "DOC ROOT NODE", "")); // Adding root node for searchings
+		
 		Document doc = null;
 		try {
 			doc = loadXsdFile(new File(filename), xsdFileNodes);
@@ -628,6 +628,7 @@ public class Builder extends DiGraph{
 		}	
 		Element elements;
 		do{
+			xsdFileNodes.add(new XsdFileNode(-1, -1, "DOC ROOT NODE", "")); // Adding root node for searchings
 			elements = doc.getDocumentElement();
 			NodeList nodeList = elements.getChildNodes();		
 			readNode(nodeList, xsdFileNodes, 1);
