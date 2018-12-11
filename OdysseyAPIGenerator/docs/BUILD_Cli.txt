@@ -11,7 +11,8 @@ Install procedure
 
 1) Copy the Odyssey API XSD files: create a directory on your hard drive which contains Tyler's Odyssey API XSD files. 
    As a convention, use the year of the Odyssey (major) release that you have installed as the name of the directory. 
-   For instance if you are using Odyssey v.2017 XSD files create directory c:/tmp/2017 
+   For instance if you are using Odyssey v.2017 XSD files create directory c:/tmp/2017. Also copy file 
+   src/main/resources/errorstream.xsd to this directory (i.e. c:/tmp/2017).  
 
 2) Configure pom.xml files for your environment
    
