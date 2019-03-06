@@ -35,6 +35,7 @@ import generated.com.tylertech.xsdbindings.getdocument.GetDocumentMessageType;
 import generated.com.tylertech.xsdbindings.getdocumentinfobyentity.DocumentByEntityEntityType;
 import generated.com.tylertech.xsdbindings.getdocumentinfobyentity.DocumentByEntityMessageType;
 import generated.com.tylertech.xsdbindings.getdocumentinfobyentityresult.GETDOCINFODOCUMENT;
+import generated.com.tylertech.xsdbindings.getodysseyreleaselevel.GETODYSSEYRELEASELEVELMESSAGETYPENAME;
 import generated.com.tylertech.xsdbindings.linkdocument.EntityTypeCode;
 import generated.com.tylertech.xsdbindings.linkdocument.LOCALLINKDOCUMENT;
 import generated.com.tylertech.xsdbindings.loadcase.LOCALLOADCASE;
@@ -96,6 +97,11 @@ public class ExampleAPIs {
 					userId, referenceNumber, source);
 			// GetResult holds caseID and nodeID needed for testing other APIs
 			System.out.println(results);
+			
+			System.out.println("-------------------------------------------------------------------------");
+			System.out.println("Testing GetOdysseyReleaseLevel API -- verifiying the release and current patch of an Odyssey server:");
+			System.out.println("-------------------------------------------------------------------------");
+			exampleAPIs.getOdysseyReleaseLevel(odysseyWebServiceInvoker, userId, referenceNumber, source);
 			
 			System.out.println("---------------------------------------------------------------");
 			System.out.println("Testing LoadCase API -- loading case events from a case number:");
@@ -161,7 +167,7 @@ public class ExampleAPIs {
 			exampleAPIs.addCaseCrossReferenceNumber(odysseyWebServiceInvoker, results.getCaseID(), 
 					newCCR, "SE", results.getNodeID(),
 					userId, referenceNumber, source);
-						
+			
 		} catch (OdysseyWebServiceException e) {
 			e.printStackTrace();
 		}
@@ -371,7 +377,7 @@ public class ExampleAPIs {
 	}
 	
 	private void editCaseEvent(OdysseyWebServiceInvoker odyInvoker, int eventID, String comment,
-			int nodeID, int userID,	String referenceNumber, String source) throws OdysseyWebServiceException{
+			int nodeID, int userID,	String referenceNumber, String source) throws OdysseyWebServiceException {
 		
 		generated.com.tylertech.xsdbindings.editcaseevent.Message message = 
 				new generated.com.tylertech.xsdbindings.editcaseevent.Message();
@@ -398,7 +404,7 @@ public class ExampleAPIs {
 	
 	private void addCaseCrossReferenceNumber(OdysseyWebServiceInvoker odyInvoker, int caseId, 
 			String crossRefNumber, String crossRefNumberType,
-			int nodeID, int userID,	String referenceNumber, String source) throws OdysseyWebServiceException{
+			int nodeID, int userID,	String referenceNumber, String source) throws OdysseyWebServiceException {
 		
 		generated.com.tylertech.xsdbindings.addcasecrossreferencenumber.Message message = 
 				new generated.com.tylertech.xsdbindings.addcasecrossreferencenumber.Message();
@@ -428,7 +434,7 @@ public class ExampleAPIs {
 	
 	public int addDocument(OdysseyWebServiceInvoker odyInvoker, String fileName,
 			String docType,	String fileExtension, String caseEventDescription, int numberOfPages,
-			int nodeID, int userID,	String referenceNumber, String source) throws OdysseyWebServiceException{
+			int nodeID, int userID,	String referenceNumber, String source) throws OdysseyWebServiceException {
 		
 		LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -490,8 +496,30 @@ public class ExampleAPIs {
 		System.out.println("Document uploaded, docId: " + reply.getDocumentID());
 		return reply.getDocumentID();
 	}
+	
+	/**
+	 */
+	private void getOdysseyReleaseLevel(OdysseyWebServiceInvoker odyInvoker, 
+			int userID,	String referenceNumber, String source) throws OdysseyWebServiceException {
 		
-	private class GetResults{		
+		generated.com.tylertech.xsdbindings.getodysseyreleaselevel.Message message = 
+				new generated.com.tylertech.xsdbindings.getodysseyreleaselevel.Message();
+		
+		message.setUserID(userID);
+		message.setReferenceNumber(referenceNumber);
+		message.setSource(source);
+		message.setNodeID(new BigInteger("0"));
+		message.setMessageType(GETODYSSEYRELEASELEVELMESSAGETYPENAME.GET_ODYSSEY_RELEASE_LEVEL);
+					
+		generated.com.tylertech.xsdbindings.getodysseyreleaselevelresult.Result reply = 
+				(generated.com.tylertech.xsdbindings.getodysseyreleaselevelresult.Result) 
+				    odyInvoker.invoker(message, "GetOdysseyReleaseLevelResult", generated.com.tylertech.xsdbindings.getodysseyreleaselevelresult.Result.class);
+		
+		System.out.println("GetOdysseyReleaseLevel release: " + reply.getRelease());
+		System.out.println("GetOdysseyReleaseLevel path: " + reply.getPatch());
+	}
+	
+	private class GetResults {		
 		private int nodeID;
 		private int caseID;		
 		public int getNodeID() { return nodeID;	}		
@@ -503,7 +531,7 @@ public class ExampleAPIs {
 		}
 	}	
 	
-	private class GetDocumentResults{		
+	private class GetDocumentResults {		
 		private int documentID;
 		private int documentVersionID;		
 		public int getDocumentID() {return documentID;}
